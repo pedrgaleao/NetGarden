@@ -238,27 +238,27 @@ class MainWindow(QMainWindow):
     def _add_log_safe(self, message):
         self.console.append(message)
 
-    def _json_safe(self, obj):
+    @staticmethod
+    def _json_safe(obj):
         if isinstance(
-            obj,
-            (
-                datetime.datetime,
-                datetime.date,
-            ),
+                obj,
+                (
+                        datetime.datetime,
+                        datetime.date,
+                ),
         ):
             return obj.isoformat()
 
         if isinstance(
-            obj,
-            (
-                bytes,
-                bytearray,
-            ),
+                obj,
+                (
+                        bytes,
+                        bytearray,
+                ),
         ):
             return obj.hex()
 
         return str(obj)
-
     def toggle_inspect_mode(self):
         if self.inspect_mode == "tree":
             self.inspect_mode = "text"
@@ -484,7 +484,7 @@ class MainWindow(QMainWindow):
 
         except Exception as e:
             self.details.setPlainText(
-                f"Falha ao formatar: {e}\n\n"
+                f"Falha ao Formatar: {e}\n\n"
                 f"{str(parsed)}"
             )
 
@@ -562,7 +562,8 @@ class MainWindow(QMainWindow):
     def set_filter(self, text):
         self.filter_text = text
 
-    def resolve_string(self, packet_id):
+    @staticmethod
+    def resolve_string(packet_id):
         if packet_id in NETSTRINGS:
             return (
                 f"{NETSTRINGS[packet_id]} "

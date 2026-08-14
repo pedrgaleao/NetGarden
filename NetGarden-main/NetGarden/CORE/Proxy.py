@@ -61,7 +61,8 @@ class Proxy:
         self._stop_flag.set()
         self._close_all_sockets()
 
-    def _now_ts(self):
+    @staticmethod
+    def _now_ts():
         return datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
 
     def _register_socket(self, sock):
@@ -147,8 +148,6 @@ class Proxy:
             while not self._stop_flag.is_set():
                 client_sock = None
                 server_sock = None
-                client_thread = None
-                server_thread = None
 
                 try:
                     try:
